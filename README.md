@@ -3,11 +3,11 @@
 Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future.
 
 ## How to use:
-1 - Add the binary file to your home directory and run porkbun-manager --install
+1 - Add the binary file to your home directory (or wherever you want, I use /usr/local/bin) and run porkbun-manager --install
 
-2 - Go to ~/.config/porkbun-manager and edit dns-info.json to include all your relevant information
+2 - Go to ~/.config/porkbun-manager and edit config.json to include all your relevant information
 
-3 - Invoke porkbun-manager to update the DNS record
+3 - You can then porkbun-manager to update the DNS record
 
 4 - Set up whatever cronjob you'd like, personally I use @reboot ~/porkbun-manager
 
