@@ -1,0 +1,6 @@
+{
+    "domain": "DOMAIN-HERE",
+    "subdomain": "SUBDOMAIN-HERE",
+    "secretapikey": "SECRETKEY-HERE",
+    "apikey": "APIKEY-HERE"
+}
