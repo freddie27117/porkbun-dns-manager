@@ -10,7 +10,7 @@ pub fn current_ip() -> String {
     current_ip.text().unwrap()
 }
 
-// Everyting bellow here is used to send the request and manage the response
+// everything bellow here is used to send the request and manage the response
 pub fn current_dns_entry() -> String {
     let keys = get_keys();
     let target_url = build_url();
