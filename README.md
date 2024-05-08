@@ -15,5 +15,9 @@ Right now this is only tested on linux, since this is where most server environm
 
 ## Notes
 -The only two ways to invoke the manager right now is either no arguments (./porkbun-manager) or adding the --install flag
+
 -No arguments will attempt to update your DNS record, while --install will create all the necessary files
+
 -Running --install again will delete your current json data, so only do this if you need to and make sure you have your keys saved elsewhere
+
+-If there is any issues you can check the log file where it will have the full response from the server.
