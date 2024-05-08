@@ -4,9 +4,13 @@ Right now this is only tested on linux, since this is where most server environm
 
 ## How to use:
 1 - Add the binary file to your home directory and run porkbun-manager --install
+
 2 - Go to ~/.config/porkbun-manager and edit dns-info.json to include all your relevant information
+
 3 - Invoke porkbun-manager to update the DNS record
+
 4 - Set up whatever cronjob you'd like, personally I use @reboot ~/porkbun-manager
+
 5 - If you don't have an API key yet you can get one from here https://porkbun.com/account/api
 
 ## Notes
