@@ -1,7 +1,6 @@
 # Porkbun DNS Manager
 ## A simple way to interact with the Porkbun API in order to and modify a DNS record
-
-## Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future.
+### Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future.
 
 ## How to use:
 ### Add the binary file to your home directory and run porkbun-manager --install
