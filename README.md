@@ -1,5 +1,5 @@
 # Porkbun DNS Manager
-## A simple way to interact with the Porkbun API in order to and modify a DNS record
+### A simple way to interact with the Porkbun API to modify an existing DNS record
 Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future.
 
 ## How to use:
