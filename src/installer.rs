@@ -26,14 +26,12 @@ fn make_log() {
 
 fn make_default_json() {
     let home_dir: std::path::PathBuf = home_dir().expect("Could not locate home directory");
-    let file_location = home_dir
-        .join(Path::new(FILE_LOCATION))
-        .join("dns-info.json");
+    let file_location = home_dir.join(Path::new(FILE_LOCATION)).join("config.json");
 
     let data = JSONdata {
         domain: "DOMAIN-HERE".to_string(),
         subdomain: "SUBDOMAIN-HERE".to_string(),
-        ttl: "TTL-HERE".to_string(),
+        ttl: "600".to_string(),
         secretapikey: "SECRET-KEY".to_string(),
         apikey: "API-KEY".to_string(),
     };

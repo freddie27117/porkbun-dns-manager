@@ -1,6 +1,6 @@
 # Porkbun DNS Manager
 ### A simple way to interact with the Porkbun API to modify an existing DNS record
-Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future.
+Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future
 
 ## How to use:
 1 - Add the binary file to your home directory (or wherever you want, I use /usr/local/bin) and run porkbun-manager --install
@@ -20,4 +20,6 @@ Right now this is only tested on linux, since this is where most server environm
 
 -Running --install again will delete your current json data, so only do this if you need to and make sure you have your keys saved elsewhere
 
--If there is any issues you can check the log file where it will have the full response from the server.
+-If there is any issues you can check the log file where it will have the full response from the server
+
+-The default TTL is 600, you dont need to change this unless you have a reason to
