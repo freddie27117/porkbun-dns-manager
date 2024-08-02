@@ -1,2 +1,4 @@
 /target
 *.lock
+/.vscode
+to-do.txt

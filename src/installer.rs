@@ -13,7 +13,7 @@ pub fn install() {
 }
 
 fn make_directory() {
-    let home_dir = home_dir().expect("Could not locate the home directory");
+    let home_dir = home_dir().expect("Unable to fetch your home directory");
     let directory = home_dir.join(Path::new(FILE_LOCATION));
 
     fs::create_dir_all(directory).expect("Could not create folders");
@@ -25,7 +25,7 @@ fn make_log() {
 }
 
 fn make_default_json() {
-    let home_dir: std::path::PathBuf = home_dir().expect("Could not locate home directory");
+    let home_dir: std::path::PathBuf = home_dir().expect("Unable to fetch your home directory");
     let file_location = home_dir.join(Path::new(FILE_LOCATION)).join("config.json");
 
     let data = JSONdata {

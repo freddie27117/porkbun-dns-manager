@@ -4,18 +4,13 @@ pub mod deblogger;
 mod installer;
 pub mod structs;
 pub mod utils;
-
 use deblogger::deblogger;
 use std::env::args;
-
-// make config file for less repeating code?
 
 fn main() {
     let args: Vec<_> = args().collect();
 
-    if args.len() > 1 && args[1] == "--install" {
-        installer::install();
-    } else {
+    if args.len() == 1 {
         let current_ip = address_getter::current_ip();
         let dns_entry = address_getter::current_dns_entry();
 
@@ -30,7 +25,11 @@ fn main() {
 
             deblogger("Done!")
         } else {
-            deblogger("Your current IP already matches what is in the DNS record")
+            deblogger("Your current IP already matches the cached record")
         }
+    } else if args.len() > 1 && args[1] == "--install" {
+        installer::install();
+    } else {
+        println!("Invalid argument entered...")
     }
 }

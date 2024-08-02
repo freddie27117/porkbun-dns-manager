@@ -1,7 +1,0 @@
-{
-    "domain": "DOMAIN-HERE",
-    "subdomain": "SUBDOMAIN-HERE",
-    "ttl": "TTL-HERE",
-    "secretapikey": "SECRETKEY-HERE",
-    "apikey": "APIKEY-HERE"
-}

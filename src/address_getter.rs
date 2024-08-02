@@ -3,7 +3,7 @@ use crate::structs::{KeyPackage, Response};
 use crate::utils::get_json_data;
 use reqwest::blocking;
 
-// get current public op from ipify
+// get current public ip from ipify
 pub fn current_ip() -> String {
     let current_ip = blocking::get("https://api.ipify.org")
         .unwrap_or_else(|e| deblogger_fatal("Unable to get address from ipify", e.to_string()));

@@ -46,22 +46,22 @@ fn send_request(payload: String, target_url: String) {
             deblogger_fatal("There was an error sending the request", e.to_string())
         });
 
-    let status = response.text().unwrap();
+    let response = response.text().unwrap();
 
-    let status: Status = serde_json::from_str(status.as_str()).unwrap_or_else(|e| {
+    let result: Status = serde_json::from_str(response.as_str()).unwrap_or_else(|e| {
         deblogger_fatal(
             format!(
                 "Could not decipher the response from the server. The response was '{}'",
-                status
+                response
             ),
             e.to_string(),
         )
     });
 
-    if status.status != "SUCCESS" {
+    if result.status != "SUCCESS" {
         deblogger_fatal(
             "The returned code was something other than success",
-            status.status,
+            result.status,
         )
     }
 }
