@@ -29,7 +29,7 @@ fn build_url() -> String {
     let json_data = get_json_data();
 
     let url = format!(
-        "https://porkbun.com/api/json/v3/dns/editByNameType/{}/A/{}",
+        "https://api.porkbun.com/api/json/v3/dns/editByNameType/{}/A/{}",
         json_data.domain, json_data.subdomain
     );
     url
