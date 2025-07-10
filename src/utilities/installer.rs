@@ -1,4 +1,4 @@
-use crate::utilities::deblogger::deblogger;
+use crate::utilities::deblogger::{deblogger, deblogger_fatal};
 use crate::utilities::structs::JSONdata;
 use crate::utilities::utils::FILE_LOCATION;
 use home::home_dir;
@@ -24,8 +24,8 @@ fn make_default_json() {
 
     let data = get_install_info();
 
-    let json_data =
-        serde_json::to_string_pretty(&data).expect("Could not format the default json data");
+    let json_data = serde_json::to_string_pretty(&data)
+        .unwrap_or_else(|error| deblogger_fatal("Unable to format json data", error));
 
     let mut file = fs::OpenOptions::new()
         .create(true)
@@ -34,7 +34,8 @@ fn make_default_json() {
         .open(&file_location)
         .expect("err");
 
-    write!(file, "{}", json_data).expect("Error");
+    write!(file, "{}", json_data)
+        .unwrap_or_else(|error| deblogger_fatal("Unable to write data to json file", error));
     deblogger("Created JSON file");
 }
 
