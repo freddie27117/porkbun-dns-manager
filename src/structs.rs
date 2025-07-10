@@ -43,4 +43,5 @@ pub struct UpdateRequest {
 #[derive(Deserialize)]
 pub struct Status {
     pub status: String,
+    pub message: Option<String>,
 }

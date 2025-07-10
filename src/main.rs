@@ -1,18 +1,21 @@
-mod address_getter;
-mod address_setter;
 pub mod deblogger;
+mod getters;
+use deblogger::deblogger;
+use getters::{get_dns_entry, get_public_ip};
 mod installer;
+mod setters;
 pub mod structs;
 pub mod utils;
-use deblogger::deblogger;
 use std::env::args;
+mod address_setter;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let args: Vec<_> = args().collect();
 
     if args.len() == 1 {
-        let current_ip = address_getter::current_ip();
-        let dns_entry = address_getter::current_dns_entry();
+        let current_ip = get_public_ip().await;
+        let dns_entry = get_dns_entry().await;
 
         if current_ip != dns_entry {
             deblogger(format!(
