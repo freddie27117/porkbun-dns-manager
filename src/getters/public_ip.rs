@@ -21,7 +21,7 @@ pub async fn current_ip() -> String {
                     break;
                 } else {
                     deblogger(format!(
-                        "unable to get ip address from ipify... trying again in 10 seconds. [{}/3]",
+                        "Unable to get IP address from ipify... Trying again in 10 seconds. [{}/3]",
                         i
                     ));
                     sleep(time::Duration::from_secs(10)).await
@@ -33,7 +33,7 @@ pub async fn current_ip() -> String {
     }
 
     deblogger_fatal(
-        "attempts to get ip address from ipify repeatedly failed",
+        "Attempts to get IP address from ipify repeatedly failed.",
         error,
     );
 }

@@ -16,5 +16,5 @@ pub fn get_json_data() -> JSONdata {
     let contents: JSONdata = serde_json::from_reader(reader)
         .unwrap_or_else(|e| deblogger_fatal("Unable to serialize the retrieved json data", e));
 
-    contents
+    return contents;
 }

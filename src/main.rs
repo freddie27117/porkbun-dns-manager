@@ -17,11 +17,11 @@ async fn main() {
 
         if current_ip != dns_entry {
             deblogger(format!(
-                "Current IP address: {} does not match the cached DNS address: {}",
+                "Current IP address ({}) does not match the cached DNS address ({}).",
                 current_ip, dns_entry
             ));
-            deblogger("Updating...");
 
+            deblogger("Updating...");
             if dns_entry == "0.0.0.0".to_string() {
                 create_dns_record(current_ip).await;
             } else {
@@ -29,11 +29,11 @@ async fn main() {
             }
             deblogger("Done!")
         } else {
-            deblogger("Your current IP already matches the cached record")
+            deblogger("Your current IP already matches the cached record.")
         }
     } else if args.len() > 1 && args[1] == "--install" {
         install();
     } else {
-        println!("Invalid argument entered...")
+        println!("Invalid argument entered.")
     }
 }

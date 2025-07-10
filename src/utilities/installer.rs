@@ -15,7 +15,7 @@ fn make_directory() {
     let home_dir = home_dir().expect("Unable to fetch your home directory");
     let directory = home_dir.join(Path::new(FILE_LOCATION));
 
-    fs::create_dir_all(directory).expect("Could not create folders");
+    fs::create_dir_all(directory).expect("Could not create working directory");
 }
 
 fn make_default_json() {
@@ -25,7 +25,7 @@ fn make_default_json() {
     let data = get_install_info();
 
     let json_data = serde_json::to_string_pretty(&data)
-        .unwrap_or_else(|error| deblogger_fatal("Unable to format json data", error));
+        .unwrap_or_else(|error| deblogger_fatal("Unable to format json credentials", error));
 
     let mut file = fs::OpenOptions::new()
         .create(true)
@@ -35,7 +35,7 @@ fn make_default_json() {
         .expect("err");
 
     write!(file, "{}", json_data)
-        .unwrap_or_else(|error| deblogger_fatal("Unable to write data to json file", error));
+        .unwrap_or_else(|error| deblogger_fatal("Unable to write credentials to json file", error));
     deblogger("Created JSON file");
 }
 

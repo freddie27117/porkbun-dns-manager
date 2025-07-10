@@ -22,8 +22,12 @@ fn build_request(ip: String) -> String {
         ttl: json_data.ttl,
     };
 
-    request_json = serde_json::to_string(&request)
-        .unwrap_or_else(|e| deblogger_fatal("Could not convert the request to json", e));
+    request_json = serde_json::to_string(&request).unwrap_or_else(|e| {
+        deblogger_fatal(
+            "An error occurred when trying to package the DNS creation request.",
+            e,
+        )
+    });
 
     request_json
 }
@@ -46,21 +50,20 @@ async fn send_request(payload: String, target_url: String) {
         .body(payload)
         .send()
         .await
-        .unwrap_or_else(|e| deblogger_fatal("There was an error sending the request", e));
+        .unwrap_or_else(|e| {
+            deblogger_fatal(
+                "An error occurred when sending the DNS creation request.",
+                e,
+            )
+        });
 
     let response = response.text().await.unwrap();
 
-    let result: Status = serde_json::from_str(response.as_str()).unwrap_or_else(|e| {
-        deblogger_fatal(
-            format!(
-                "Could not decipher the response from the server. The response was '{}'",
-                response
-            ),
-            e,
-        )
+    let result: Status = serde_json::from_str(response.as_str()).unwrap_or_else(|_e| {
+        deblogger_fatal("Could not decipher the response from the server.", response)
     });
 
     if result.status != "SUCCESS" {
-        deblogger_fatal("Creating the DNS entry failed.", result.status)
+        deblogger_fatal("Creating the DNS entry failed.", format!("{:#?}", result))
     }
 }
