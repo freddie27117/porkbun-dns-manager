@@ -1,12 +1,12 @@
 use crate::deblogger::deblogger_fatal;
 use crate::structs::{Status, UpdateRequest};
 use crate::utils::get_json_data;
-use reqwest::blocking;
+use reqwest;
 
-pub fn dns_record(ip: String) {
+pub async fn dns_record(ip: String) {
     let payload = build_request(ip);
     let url = build_url();
-    send_request(payload, url);
+    send_request(payload, url).await;
 }
 
 fn build_request(ip: String) -> String {
@@ -35,18 +35,19 @@ fn build_url() -> String {
     url
 }
 
-fn send_request(payload: String, target_url: String) {
-    let request = blocking::Client::new();
+async fn send_request(payload: String, target_url: String) {
+    let request = reqwest::Client::new();
 
     let response = request
         .post(target_url)
         .body(payload)
         .send()
+        .await
         .unwrap_or_else(|e| {
             deblogger_fatal("There was an error sending the request", e.to_string())
         });
 
-    let response = response.text().unwrap();
+    let response = response.text().await.unwrap();
 
     let result: Status = serde_json::from_str(response.as_str()).unwrap_or_else(|e| {
         deblogger_fatal(
