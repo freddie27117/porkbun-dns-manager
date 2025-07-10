@@ -1,5 +1,5 @@
 use crate::utilities;
-use crate::utilities::deblogger::{deblogger, deblogger_fatal};
+use crate::utilities::deblogger::deblogger_fatal;
 use crate::utilities::structs::JSONdata;
 use home::home_dir;
 use std::fs::File;
