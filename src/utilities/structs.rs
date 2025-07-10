@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 // for receiving
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct JSONdata {
     pub domain: String,
     pub subdomain: String,

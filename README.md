@@ -3,7 +3,7 @@
 Since GoDaddy decided to locked out everyone with less than 50 domains from using the API, I switched to porkbun. I quickly found myself wanting a robust 'set and forget' DNS entry updater. I created this program as a simple way to achieve that.
 
 ## How to use:
-1. Add the binary to your home directory (or wherever you want, I use /usr/local/bin) and run porkbun-manager --install
+1. Add the binary to your home directory (or wherever you want, I use /usr/local/bin) and from your terminal run './porkbun-manager --install'
 
 2. Follow the prompts and insert all the relevant information.
 

@@ -8,7 +8,6 @@ use std::path::Path;
 
 pub fn install() {
     make_directory();
-    make_log();
     make_default_json();
 }
 
@@ -19,22 +18,11 @@ fn make_directory() {
     fs::create_dir_all(directory).expect("Could not create folders");
 }
 
-fn make_log() {
-    deblogger("Created directory");
-    deblogger("Initialized log file");
-}
-
 fn make_default_json() {
     let home_dir: std::path::PathBuf = home_dir().expect("Unable to fetch your home directory");
     let file_location = home_dir.join(Path::new(FILE_LOCATION)).join("config.json");
 
-    let data = JSONdata {
-        domain: "DOMAIN-HERE".to_string(),
-        subdomain: "SUBDOMAIN-HERE".to_string(),
-        ttl: "600".to_string(),
-        secretapikey: "SECRET-KEY".to_string(),
-        apikey: "API-KEY".to_string(),
-    };
+    let data = get_install_info();
 
     let json_data =
         serde_json::to_string_pretty(&data).expect("Could not format the default json data");
@@ -42,15 +30,32 @@ fn make_default_json() {
     let mut file = fs::OpenOptions::new()
         .create(true)
         .write(true)
-        .append(false)
+        .truncate(true)
         .open(&file_location)
         .expect("err");
 
     write!(file, "{}", json_data).expect("Error");
     deblogger("Created JSON file");
-    deblogger("DONE!");
-    println!(
-        "REMINDER: Be sure to update {} with your dns info",
-        &file_location.to_string_lossy()
-    );
+}
+
+fn get_install_info() -> JSONdata {
+    let prompts = ["Domain", "Subdomain", "ttl", "Secret API Key", "API Key"];
+    let mut responses: Vec<String> = Vec::new();
+
+    for prompt in prompts.iter() {
+        let mut line: String = String::new();
+        print!("Enter {}: ", prompt);
+        std::io::stdout().flush().unwrap();
+        std::io::stdin().read_line(&mut line).unwrap();
+
+        responses.push(line.trim().to_string());
+    }
+
+    return JSONdata {
+        domain: responses[0].to_string(),
+        subdomain: responses[1].to_string(),
+        ttl: responses[2].to_string(),
+        secretapikey: responses[3].to_string(),
+        apikey: responses[4].to_string(),
+    };
 }
