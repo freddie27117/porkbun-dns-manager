@@ -13,7 +13,6 @@ pub async fn dns_entry() -> String {
 
     match response_unwrapping {
         Ok(response_data) => {
-            println!("{:#?}", response_data);
             data = response_data;
         }
         Err(_e) => {

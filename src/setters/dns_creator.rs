@@ -1,9 +1,9 @@
 use crate::deblogger::deblogger_fatal;
-use crate::structs::{Status, UpdateRequest};
+use crate::structs::{CreateRequest, Status, UpdateRequest};
 use crate::utils::get_json_data;
 use reqwest;
 
-pub async fn update_dns_record(ip: String) {
+pub async fn create_dns_record(ip: String) {
     let payload = build_request(ip);
     let url = build_url();
     send_request(payload, url).await;
@@ -11,28 +11,32 @@ pub async fn update_dns_record(ip: String) {
 
 fn build_request(ip: String) -> String {
     let json_data = get_json_data();
+    let request_json: String;
 
-    let request = UpdateRequest {
+    let request = CreateRequest {
         secretapikey: json_data.secretapikey,
         apikey: json_data.apikey,
+        name: json_data.subdomain,
+        type_: "A".to_string(),
         content: ip,
         ttl: json_data.ttl,
     };
 
-    let request_json = serde_json::to_string(&request).unwrap_or_else(|e| {
+    request_json = serde_json::to_string(&request).unwrap_or_else(|e| {
         deblogger_fatal("Could not convert the request to json", e.to_string())
     });
+
     request_json
 }
 
 fn build_url() -> String {
     let json_data = get_json_data();
-
-    let url = format!(
-        "https://api.porkbun.com/api/json/v3/dns/editByNameType/{}/A/{}",
-        json_data.domain, json_data.subdomain
+    let url: String;
+    url = format!(
+        "https://api.porkbun.com/api/json/v3/dns/create/{}",
+        json_data.domain
     );
-    url
+    return url;
 }
 
 async fn send_request(payload: String, target_url: String) {
@@ -60,6 +64,6 @@ async fn send_request(payload: String, target_url: String) {
     });
 
     if result.status != "SUCCESS" {
-        deblogger_fatal("Updating the DNS entry failed.", result.status)
+        deblogger_fatal("Creating the DNS entry failed.", result.status)
     }
 }

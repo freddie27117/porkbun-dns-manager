@@ -40,7 +40,18 @@ pub struct UpdateRequest {
     pub ttl: String,
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize)]
+pub struct CreateRequest {
+    pub secretapikey: String,
+    pub apikey: String,
+    pub name: String,
+    #[serde(rename = "type")]
+    pub type_: String,
+    pub content: String,
+    pub ttl: String,
+}
+
+#[derive(Deserialize, Debug)]
 pub struct Status {
     pub status: String,
     pub message: Option<String>,
