@@ -13,7 +13,7 @@ pub fn deblogger(message: impl AsRef<str>) {
     log(formatted_message)
 }
 
-pub fn deblogger_fatal(message: impl AsRef<str>, error: String) -> ! {
+pub fn deblogger_fatal(message: impl AsRef<str>, error: impl std::fmt::Display) -> ! {
     let time = Local::now().format("%Y-%m-%d %H:%M:%S");
     let message = message.as_ref();
     let formatted_message = format!("[{}] FATAL: {} -> {}", time, message, error);

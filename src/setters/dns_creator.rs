@@ -22,9 +22,8 @@ fn build_request(ip: String) -> String {
         ttl: json_data.ttl,
     };
 
-    request_json = serde_json::to_string(&request).unwrap_or_else(|e| {
-        deblogger_fatal("Could not convert the request to json", e.to_string())
-    });
+    request_json = serde_json::to_string(&request)
+        .unwrap_or_else(|e| deblogger_fatal("Could not convert the request to json", e));
 
     request_json
 }
@@ -47,9 +46,7 @@ async fn send_request(payload: String, target_url: String) {
         .body(payload)
         .send()
         .await
-        .unwrap_or_else(|e| {
-            deblogger_fatal("There was an error sending the request", e.to_string())
-        });
+        .unwrap_or_else(|e| deblogger_fatal("There was an error sending the request", e));
 
     let response = response.text().await.unwrap();
 
@@ -59,7 +56,7 @@ async fn send_request(payload: String, target_url: String) {
                 "Could not decipher the response from the server. The response was '{}'",
                 response
             ),
-            e.to_string(),
+            e,
         )
     });
 

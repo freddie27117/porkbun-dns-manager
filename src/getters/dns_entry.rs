@@ -37,7 +37,7 @@ fn get_keys() -> String {
         apikey: json_data.apikey,
     };
     let payload = serde_json::to_string(&key_package)
-        .unwrap_or_else(|e| deblogger_fatal("Unable to package the keys", e.to_string()));
+        .unwrap_or_else(|e| deblogger_fatal("Unable to package the keys", e));
     payload
 }
 
@@ -55,7 +55,7 @@ async fn send_request(keys: &String, url: &String) -> String {
     let api_request = reqwest::Client::new();
     let response = match api_request.post(url).body(keys.clone()).send().await {
         Ok(answer) => answer.text().await.unwrap(),
-        Err(e) => deblogger_fatal("Something went wrong with the request", e.to_string()),
+        Err(e) => deblogger_fatal("Something went wrong with the request", e),
     };
     return response;
 }
@@ -69,12 +69,9 @@ fn handle_unexecpted_responce(response: String) {
     if status.status == "ERROR" {
         if let Some(message) = status.message {
             if message.contains("Invalid API key") {
-                deblogger_fatal(
-                    "The server returned an error",
-                    "Invalid API key".to_string(),
-                );
+                deblogger_fatal("The server returned an error", "Invalid API key");
             } else if message.contains("Invalid domain") {
-                deblogger_fatal("The server returned an error", "Invalid domain".to_string());
+                deblogger_fatal("The server returned an error", "Invalid domain");
             } else {
                 deblogger_fatal("The server returned an unforeseen error", response);
             }
