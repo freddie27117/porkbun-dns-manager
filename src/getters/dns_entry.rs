@@ -63,10 +63,7 @@ async fn send_request(keys: &String, url: &String) -> String {
 fn handle_unexecpted_responce(response: String) {
     let status: structs::Status =
         serde_json::from_str(response.as_str()).unwrap_or_else(|_error| {
-            deblogger_fatal(
-                "The server sent back a response in an unknown format",
-                response.clone(),
-            );
+            deblogger_fatal("An unknown error occurred.", response.clone());
         });
 
     if status.status == "ERROR" {
