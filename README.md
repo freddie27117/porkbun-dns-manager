@@ -1,24 +1,20 @@
 # Porkbun DNS Manager
-### A simple way to interact with the Porkbun API to modify an existing DNS record
-Right now this is only tested on linux, since this is where most server environments tend to be. I may add functionality for windows in the future
+### A simple way to interact with the Porkbun API to modify or create a DNS record
+Since GoDaddy decided to locked out everyone with less than 50 domain from using the API, I switched to porkbun. I quickly found myself wanting a robust 'set and forget' DNS entry updater.
+
+I created the program as a simple way to achieve that.
 
 ## How to use:
 1 - Add the binary to your home directory (or wherever you want, I use /usr/local/bin) and run porkbun-manager --install
 
-2 - Go to ~/.config/porkbun-manager and edit config.json to include all your relevant information
+2 - Follow the prompts and insert all the relevant information.
 
-3 - You can then porkbun-manager to update the DNS record
+3 - That's it, you're setup. Run the binary and it will update the existing DNS entry, or create a new one.
 
-4 - Set up whatever cronjob you'd like, personally I use @reboot ~/porkbun-manager
-
-5 - If you don't have an API key yet you can get one from here https://porkbun.com/account/api
+Personally, I use a cronjob to run it nightly. Though depending on your needs you can run it more often. If you need to update the information you can run the install again, or go to .config/porkbun-manager/config.json
 
 ## Notes
-- The only two ways to invoke the manager right now is either no arguments (./porkbun-manager) or adding the --install flag
-
-- No arguments will attempt to update your DNS record, while --install will create all the necessary files
-
-- Running --install again will delete your current json data, so only do this if you need to and make sure you have your keys saved elsewhere
+- If you don't have an API key you can get one from here https://porkbun.com/account/api
 
 - If there is any issues you can check the log file where it will have the full response from the server
 
