@@ -1,6 +1,6 @@
-use crate::deblogger::deblogger;
-use crate::structs::JSONdata;
-use crate::utils::FILE_LOCATION;
+use crate::utilities::deblogger::deblogger;
+use crate::utilities::structs::JSONdata;
+use crate::utilities::utils::FILE_LOCATION;
 use home::home_dir;
 use std::fs;
 use std::io::Write;

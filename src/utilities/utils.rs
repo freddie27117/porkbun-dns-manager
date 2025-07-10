@@ -1,5 +1,5 @@
-use crate::deblogger::deblogger_fatal;
-use crate::structs::JSONdata;
+use crate::utilities::deblogger::deblogger_fatal;
+use crate::utilities::structs::JSONdata;
 use home::home_dir;
 use std::fs::File;
 use std::io::BufReader;

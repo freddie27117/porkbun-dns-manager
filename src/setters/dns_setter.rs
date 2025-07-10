@@ -1,6 +1,6 @@
-use crate::deblogger::deblogger_fatal;
-use crate::structs::{Status, UpdateRequest};
-use crate::utils::get_json_data;
+use crate::utilities::deblogger::deblogger_fatal;
+use crate::utilities::structs::{Status, UpdateRequest};
+use crate::utilities::utils::get_json_data;
 use reqwest;
 
 pub async fn update_dns_record(ip: String) {

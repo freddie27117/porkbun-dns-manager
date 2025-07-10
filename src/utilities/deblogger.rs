@@ -1,4 +1,4 @@
-use crate::utils;
+use crate::utilities::utils;
 use chrono::Local;
 use home::home_dir;
 use std::fs::OpenOptions;

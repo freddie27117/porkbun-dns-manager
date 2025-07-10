@@ -1,12 +1,10 @@
-pub mod deblogger;
 mod getters;
-use deblogger::deblogger;
+pub mod utilities;
 use getters::{get_dns_entry, get_public_ip};
-mod installer;
+use utilities::deblogger::deblogger;
+use utilities::install;
 mod setters;
 use setters::{create_dns_record, set_dns_record};
-pub mod structs;
-pub mod utils;
 use std::env::args;
 
 #[tokio::main]
@@ -34,7 +32,7 @@ async fn main() {
             deblogger("Your current IP already matches the cached record")
         }
     } else if args.len() > 1 && args[1] == "--install" {
-        installer::install();
+        install();
     } else {
         println!("Invalid argument entered...")
     }

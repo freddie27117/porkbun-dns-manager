@@ -1,6 +1,6 @@
-use crate::deblogger::{deblogger, deblogger_fatal};
-use crate::structs;
-use crate::utils::get_json_data;
+use crate::utilities::deblogger::{deblogger, deblogger_fatal};
+use crate::utilities::structs;
+use crate::utilities::utils::get_json_data;
 use reqwest;
 
 pub async fn dns_entry() -> String {

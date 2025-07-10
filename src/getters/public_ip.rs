@@ -1,4 +1,4 @@
-use crate::deblogger::{deblogger, deblogger_fatal};
+use crate::utilities::deblogger::{deblogger, deblogger_fatal};
 use reqwest;
 use std::time;
 use tokio::time::sleep;
