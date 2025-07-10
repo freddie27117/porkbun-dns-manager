@@ -2,53 +2,33 @@ use crate::deblogger::{deblogger, deblogger_fatal};
 use crate::structs;
 use crate::utils::get_json_data;
 use reqwest;
-use std::time::Duration;
-use tokio::time::sleep;
 
 pub async fn dns_entry() -> String {
     let keys = get_keys();
     let target_url = build_url();
 
-    let mut data: Option<structs::Response> = None;
-    let mut i = 1;
-    while i <= 4 {
-        let response = send_request(&keys, &target_url).await;
-        let response_unwrapping = serde_json::from_str(&response);
+    let response = send_request(&keys, &target_url).await;
+    let response_unwrapping = serde_json::from_str(&response);
+    let data: structs::Response;
 
-        match response_unwrapping {
-            Ok(response_data) => {
-                data = response_data;
-                break;
-            }
-            Err(_e) => {
-                if i == 4 {
-                    deblogger_fatal(
-                        "The server repeatedly failed to send back unexpected data.",
-                        response.to_string(),
-                    );
-                } else {
-                    deblogger(format!(
-                        "The server sent back an unexpected response... Trying again [{}/3]",
-                        i
-                    ));
-                }
-            }
-        };
-        sleep(Duration::from_secs(3)).await;
-        i += 1;
+    match response_unwrapping {
+        Ok(response_data) => {
+            println!("{:#?}", response_data);
+            data = response_data;
+        }
+        Err(_e) => {
+            handle_unexecpted_responce(response);
+            unreachable!()
+        }
+    };
+
+    if data.records.is_empty() {
+        deblogger("The records came back empty... A new subdomain will be created.");
+        return String::from("0.0.0.0");
     }
 
-    let data = data.expect(""); // this will never be None, the code will panic before that
-                                // with "deblogger_fatal" but I cant seem to make the complier
-                                // understand this.
-    let data = data.records.get(0);
-    let test = 10;
-    let ip = match data {
-        Some(data) => data,
-        None => deblogger_fatal("The server is either offline or ignoring our requests. Please verify you have entered the correct domain and sub domain.", "The server returned nothing".to_string()
-        ),
-    };
-    return ip.content.clone();
+    let data = data.records.get(0).unwrap();
+    return data.content.clone();
 }
 
 fn get_keys() -> String {
@@ -79,4 +59,29 @@ async fn send_request(keys: &String, url: &String) -> String {
         Err(e) => deblogger_fatal("Something went wrong with the request", e.to_string()),
     };
     return response;
+}
+
+fn handle_unexecpted_responce(response: String) {
+    let status: structs::Status =
+        serde_json::from_str(response.as_str()).unwrap_or_else(|_error| {
+            deblogger_fatal(
+                "The server sent back a response in an unknown format",
+                response.clone(),
+            );
+        });
+
+    if status.status == "ERROR" {
+        if let Some(message) = status.message {
+            if message.contains("Invalid API key") {
+                deblogger_fatal(
+                    "The server returned an error",
+                    "Invalid API key".to_string(),
+                );
+            } else if message.contains("Invalid domain") {
+                deblogger_fatal("The server returned an error", "Invalid domain".to_string());
+            } else {
+                deblogger_fatal("The server returned an unforeseen error", response);
+            }
+        }
+    }
 }

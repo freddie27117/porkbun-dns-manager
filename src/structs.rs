@@ -14,7 +14,7 @@ pub struct KeyPackage {
     pub secretapikey: String,
     pub apikey: String,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Record {
     pub id: String,
     pub name: String,
@@ -24,7 +24,7 @@ pub struct Record {
     pub prio: String,
     pub notes: Option<String>,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Response {
     pub status: String,
     pub cloudflare: String,
